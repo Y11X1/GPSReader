@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Distance.cpp" />
     <ClCompile Include="GPGGA.cpp" />
     <ClCompile Include="GPRMC.cpp" />
     <ClCompile Include="GPSstr.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="uart_test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Distance.h" />
     <ClInclude Include="GPGGA.h" />
     <ClInclude Include="GPRMC.h" />
     <ClInclude Include="GPSstr.h" />

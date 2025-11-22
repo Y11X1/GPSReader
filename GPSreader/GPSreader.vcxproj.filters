@@ -30,6 +30,9 @@
     <ClCompile Include="GPS_Rcv.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Distance.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gps_info.h">
@@ -45,6 +48,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GPS_Rcv.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Distance.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

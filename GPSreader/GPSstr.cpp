@@ -11,7 +11,7 @@ u1 _Find_Pos(u1* buf, u1 u1Num)
 		if (*buf == ',')u1Num--;
 		buf++;
 	}
-	return buf - p;
+	return (u1)(buf - p);
 }
 
 //m^n函数
@@ -62,4 +62,11 @@ int _Str2num(u1* buf, u1* dx)
 	res = ires * _Pow(10, flen) + fres;
 	if (mask & 0x02)res = -res;
 	return res;
+}
+
+double convertNMEAToDegrees(double nmeaValue)
+{
+	int degrees = (int)(nmeaValue / 100);      // 提取度部分
+	double minutes = nmeaValue - degrees * 100; // 提取分部分
+	return degrees + minutes / 60.0;           // 转换为十进制度
 }

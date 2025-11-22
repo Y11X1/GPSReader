@@ -3,9 +3,21 @@
 #include <conio.h>
 #include "gps_info.h"
 #include "GPS_Rcv.h"
+#include "Distance.h"  
+#include "GPSstr.h"
 
 #define comPort L"COM3"  //串口号
 #define baudRate 38400  //波特率
+
+
+
+// 定义目标点
+const double TARGET_LAT = 39.999999;   // 目标纬度（十进制度）
+const double TARGET_LON = 115.999999;  // 目标经度（十进制度）
+
+double lat = convertNMEAToDegrees(gga_info.latitude_value);
+double lon = convertNMEAToDegrees(gga_info.longtitude_value);
+double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
 
 //int main()
 //{
@@ -41,7 +53,7 @@ int main()
 	);
 
 	if (hSerial == INVALID_HANDLE_VALUE) {
-		printf("错误：无法打开串口 %s\n");
+		printf("错误：无法打开串口 %s\n",comPort);
 		printf("请检查：\n");
 		printf("1. 串口号是否正确（设备管理器中查看）\n");
 		printf("2. 串口是否被其他程序占用\n");
@@ -83,7 +95,7 @@ int main()
 	// 5. 读取并处理数据
 	
 	// 关键：设置事件掩码
-	DWORD dwCommMask = EV_RXCHAR;  // 只监听"数据到达"事件
+	DWORD dwCommMask = EV_RXCHAR;  // 只监听"数据到达"事件  触发条件：接收到字符并放入输入缓冲区（最常用）
 	if (!SetCommMask(hSerial, EV_RXCHAR)) {
 		printf("错误：设置事件掩码失败\n");
 		CloseHandle(hSerial);
@@ -93,6 +105,8 @@ int main()
 	printf("正在接收GPS数据（事件驱动模式，按任意键退出）...\n\n");
 
 	char buffer[256];
+
+	// Double Word（双字节），是Windows定义的32位无符号整数类型
 	DWORD bytesRead;
 	DWORD dwEvent;  // 存储触发的事件
 
@@ -109,25 +123,44 @@ int main()
 							for (size_t i = 0; i < bytesRead; i++) {
 								GN_UartRcvGPSInfo(buffer[i]);
 							}
+							//if (gpggaUpdated) {
+							//	printf("GNGGA 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 状态:%d 卫星:%d\n",
+							//		gga_info.utc_time.hour, gga_info.utc_time.min, gga_info.utc_time.sec,
+							//		gga_info.latitude_value, gga_info.latitude,
+							//		gga_info.longtitude_value, gga_info.longitude,
+							//		gga_info.gps_state, gga_info.sate_num);
 							if (gpggaUpdated) {
-								printf("GNGGA 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 状态:%d 卫星:%d\n",
-									gga_info.utc_time.hour, gga_info.utc_time.min, gga_info.utc_time.sec,
-									gga_info.latitude_value, gga_info.latitude,
-									gga_info.longtitude_value, gga_info.longitude,
-									gga_info.gps_state, gga_info.sate_num);
+								double lat = convertNMEAToDegrees(gga_info.latitude_value);
+								double lon = convertNMEAToDegrees(gga_info.longtitude_value);
+								double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
+								printf("当前位置: %.5f, %.5f 距离目标: %.2f米\n", lat, lon, distance);
+								// 到达判断
+							if (isArrived(lat, lon,TARGET_LAT, TARGET_LON)) {
+								printf("*** 已到达目的地 ***\n");
+								}
 								fflush(stdout);
 								gpggaUpdated = 0;  // 重置标志
 							}
 
+							//if (gprmcUpdated) {
+							//	printf("GNRMC 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 速度:%.3f\n",
+							//		gmc_info.utc_time.hour, gmc_info.utc_time.min, gmc_info.utc_time.sec,
+							//		gmc_info.latitude_value, gmc_info.latitude,
+							//		gmc_info.longtitude_value, gmc_info.longtitude,
+							//		gmc_info.speed);
 							if (gprmcUpdated) {
-								printf("GNRMC 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 速度:%.3f\n",
-									gmc_info.utc_time.hour, gmc_info.utc_time.min, gmc_info.utc_time.sec,
-									gmc_info.latitude_value, gmc_info.latitude,
-									gmc_info.longtitude_value, gmc_info.longtitude,
-									gmc_info.speed);
+								double lat = convertNMEAToDegrees(gmc_info.latitude_value);
+								double lon = convertNMEAToDegrees(gmc_info.longtitude_value);
+								double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
+								printf("当前位置: %.5f, %.5f 距离目标: %.2f米\n", lat, lon, distance);
+								// 到达判断
+								if (isArrived(lat, lon,TARGET_LAT, TARGET_LON)) {
+									printf("*** 已到达目的地 ***\n");
+								}
 								fflush(stdout);
 								gprmcUpdated = 0;  // 重置标志
 							}
+
 						}
 					}
 				} while (bytesRead > 0); // 继续读取，直到没有数据
