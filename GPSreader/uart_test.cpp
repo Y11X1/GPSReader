@@ -88,6 +88,7 @@ int main()
 	char buffer[256];  // 接收缓冲区
 	DWORD bytesRead;
 
+	//纯轮询（Polling）
 	while (!_kbhit()) {  // 检测键盘是否有按键
 		// 读取数据
 		if (ReadFile(hSerial, buffer, sizeof(buffer) - 1, &bytesRead, NULL)) {	/* 参数1：串口句柄（从哪个串口读）;
@@ -133,7 +134,7 @@ int main()
 			break;
 		}
 
-		//Sleep(10);  // 短暂休眠避免CPU占用过高
+		Sleep(10);  // 短暂休眠避免CPU占用过高
 	}
 
 	// 6. 关闭串口

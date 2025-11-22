@@ -22,7 +22,7 @@ void _ResetUartRcvBuff()
 }
 
 // GPS接收状态机
-void GN_UartRcvGPSInfo(u1 u1Data)
+void GN_UartRcvGPSInfo(u1 u1Data)   // 每收到一个字节就被调用一次
 {
     BlkUartRcv* pblkUartRcv = &blkUartRcv;
     u1* pu1Buff = pblkUartRcv->u1RcvBuff;
@@ -37,10 +37,10 @@ void GN_UartRcvGPSInfo(u1 u1Data)
         _ResetUartRcvBuff();
     }
 
-    switch (pblkUartRcv->u1State) {
+    switch (pblkUartRcv->u1State) { // 根据"当前状态"决定做什么
     case RCV_STATE_START:
         pu1Buff[pblkUartRcv->u1DataLen++] = u1Data;
-        if (u1Data == '\n') {
+        if (u1Data == '\n') {        // 收到换行符 → 触发状态转换
             for (u1size = 0; u1size < sizeof(Ascll_Info) / sizeof(GPS_ASCLLINFO); u1size++) {
                 if (CMP_SUCCESS == memcmp(&pu1Buff[0], Ascll_Info[u1size].u1AscllName, Ascll_Info[u1size].u1sizeof)) {
                     _switchState(Ascll_Info[u1size].u1Head);
