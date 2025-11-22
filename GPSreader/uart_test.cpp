@@ -54,7 +54,7 @@ int main()
 
 	if (GetCommState(hSerial, &dcb))
 		printf("成功获取串口状态\n");
-	else{
+	else {
 		printf("错误：获取串口状态失败\n");
 		CloseHandle(hSerial);
 		return 1;
@@ -65,81 +65,81 @@ int main()
 	dcb.StopBits = ONESTOPBIT;    // 1个停止位
 	dcb.Parity = NOPARITY;        // 无校验位
 
-	if (SetCommState(hSerial, &dcb)) 
+	if (SetCommState(hSerial, &dcb))
 		printf("成功设置串口参数\n");
-	else{
+	else {
 		printf("错误：设置串口参数失败\n");
 		CloseHandle(hSerial);
 		return 1;
 	}
 
-	// 4. 设置超时（避免卡死）
+	// 4. 设置超时
+	// 事件模式下，ReadFile超时可以设为0（立即返回）
 	COMMTIMEOUTS timeouts = { 0 };
-	timeouts.ReadIntervalTimeout = 50;      // 读取间隔超时:两个字节间隔超过50ms就停止
-	timeouts.ReadTotalTimeoutConstant = 50; // 总读超时:从第一次读开始，超过50ms就停止
+	timeouts.ReadIntervalTimeout = 0;
+	timeouts.ReadTotalTimeoutConstant = 0;
+	SetCommTimeouts(hSerial, &timeouts);
 
-	if (!SetCommTimeouts(hSerial, &timeouts)) {
-		printf("错误：设置超时失败\n");
+	// 5. 读取并处理数据
+	
+	// 关键：设置事件掩码
+	DWORD dwCommMask = EV_RXCHAR;  // 只监听"数据到达"事件
+	if (!SetCommMask(hSerial, EV_RXCHAR)) {
+		printf("错误：设置事件掩码失败\n");
+		CloseHandle(hSerial);
+		return 1;
 	}
 
-	// 5. 循环读取并处理数据
-	printf("正在接收GPS数据（按任意键退出）...\n\n");
+	printf("正在接收GPS数据（事件驱动模式，按任意键退出）...\n\n");
 
-	char buffer[256];  // 接收缓冲区
+	char buffer[256];
 	DWORD bytesRead;
+	DWORD dwEvent;  // 存储触发的事件
 
-	//纯轮询（Polling）
+	//使用WaitCommEvent（事件驱动）
 	while (!_kbhit()) {  // 检测键盘是否有按键
 		// 读取数据
-		if (ReadFile(hSerial, buffer, sizeof(buffer) - 1, &bytesRead, NULL)) {	/* 参数1：串口句柄（从哪个串口读）;
-																				   参数2：数据存到哪里；
-																				   参数3：最多读多少字节（留一个给'\0'）；
-																				   参数4：返回实际读了多少参数；
-																				   参数5：异步模式（NULL表示同步等数据）*/
-			if (bytesRead > 0) {
-				buffer[bytesRead] = '\0';  // 添加字符串结束符
+		if (WaitCommEvent(hSerial, &dwEvent, NULL)) {	//参数1：串口句柄；参数2：返回发生的事件；参数3：NULL表示同步操作
+			if (dwEvent & EV_RXCHAR) {	//事件触发后，确认是数据到达事件
+				do {
+					if (ReadFile(hSerial, buffer, sizeof(buffer) - 1, &bytesRead, NULL)) {
+						if (bytesRead > 0) {
+							buffer[bytesRead] = '\0';
 
-				//// 打印原始数据（可选）
-				//printf("%s", buffer);
-				//fflush(stdout);  // 立即显示
+							for (size_t i = 0; i < bytesRead; i++) {
+								GN_UartRcvGPSInfo(buffer[i]);
+							}
+							if (gpggaUpdated) {
+								printf("GNGGA 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 状态:%d 卫星:%d\n",
+									gga_info.utc_time.hour, gga_info.utc_time.min, gga_info.utc_time.sec,
+									gga_info.latitude_value, gga_info.latitude,
+									gga_info.longtitude_value, gga_info.longitude,
+									gga_info.gps_state, gga_info.sate_num);
+								fflush(stdout);
+								gpggaUpdated = 0;  // 重置标志
+							}
 
-				// 逐个字符传递给GPS解析函数
-				for (size_t i = 0; i < bytesRead; i++) {
-					GN_UartRcvGPSInfo(buffer[i]);
-				}
-				if (gpggaUpdated) {
-					printf("GPGGA 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 状态:%d 卫星:%d\n",
-						gga_info.utc_time.hour, gga_info.utc_time.min, gga_info.utc_time.sec,
-						gga_info.latitude_value, gga_info.latitude,
-						gga_info.longtitude_value, gga_info.longitude,
-						gga_info.gps_state, gga_info.sate_num);
-					fflush(stdout);
-					gpggaUpdated = 0;  // 重置标志
-				}
-
-				if (gprmcUpdated) {
-					printf("GPRMC 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 速度:%.3f\n",
-						gmc_info.utc_time.hour, gmc_info.utc_time.min, gmc_info.utc_time.sec,
-						gmc_info.latitude_value, gmc_info.latitude,
-						gmc_info.longtitude_value, gmc_info.longtitude,
-						gmc_info.speed);
-					fflush(stdout);
-					gprmcUpdated = 0;  // 重置标志
-				}
-
+							if (gprmcUpdated) {
+								printf("GNRMC 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 速度:%.3f\n",
+									gmc_info.utc_time.hour, gmc_info.utc_time.min, gmc_info.utc_time.sec,
+									gmc_info.latitude_value, gmc_info.latitude,
+									gmc_info.longtitude_value, gmc_info.longtitude,
+									gmc_info.speed);
+								fflush(stdout);
+								gprmcUpdated = 0;  // 重置标志
+							}
+						}
+					}
+				} while (bytesRead > 0); // 继续读取，直到没有数据
 			}
 		}
-		else {
-			printf("读取串口错误\n");
-			break;
-		}
-
-		Sleep(10);  // 短暂休眠避免CPU占用过高
+			else {
+				printf("等待串口事件错误\n");
+				break;
+			}
 	}
-
 	// 6. 关闭串口
 	CloseHandle(hSerial);
 	printf("\n程序已退出\n");
-
 	return 0;
 }
