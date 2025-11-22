@@ -18,9 +18,33 @@
     <ClCompile Include="uart_test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GPSstr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GPRMC.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GPGGA.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GPS_Rcv.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gps_info.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GPSstr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GPRMC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GPGGA.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GPS_Rcv.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

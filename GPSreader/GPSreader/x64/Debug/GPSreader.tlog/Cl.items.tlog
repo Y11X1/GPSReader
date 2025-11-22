@@ -1,1 +1,5 @@
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp;C:\Users\HP\Desktop\GPSreader\GPSreader\x64\Debug\uart_test.obj
+C:\Users\HP\source\repos\GPSReader\GPSreader\GPGGA.cpp;C:\Users\HP\source\repos\GPSReader\GPSreader\GPSreader\x64\Debug\GPGGA.obj
+C:\Users\HP\source\repos\GPSReader\GPSreader\GPRMC.cpp;C:\Users\HP\source\repos\GPSReader\GPSreader\GPSreader\x64\Debug\GPRMC.obj
+C:\Users\HP\source\repos\GPSReader\GPSreader\GPSstr.cpp;C:\Users\HP\source\repos\GPSReader\GPSreader\GPSreader\x64\Debug\GPSstr.obj
+C:\Users\HP\source\repos\GPSReader\GPSreader\GPS_Rcv.cpp;C:\Users\HP\source\repos\GPSReader\GPSreader\GPSreader\x64\Debug\GPS_Rcv.obj
+C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp;C:\Users\HP\source\repos\GPSReader\GPSreader\GPSreader\x64\Debug\uart_test.obj

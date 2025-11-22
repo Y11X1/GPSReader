@@ -1,0 +1,9 @@
+﻿# Visual Studio 缓存文件夹（永远不要提交）
+.VS/
+
+# 其他常见忽略项
+*.user
+*.suo
+bin/
+obj/
+*.cache

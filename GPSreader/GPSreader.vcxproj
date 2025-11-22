@@ -123,10 +123,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GPGGA.cpp" />
+    <ClCompile Include="GPRMC.cpp" />
+    <ClCompile Include="GPSstr.cpp" />
+    <ClCompile Include="GPS_Rcv.cpp" />
     <ClCompile Include="uart_test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GPGGA.h" />
+    <ClInclude Include="GPRMC.h" />
+    <ClInclude Include="GPSstr.h" />
     <ClInclude Include="gps_info.h" />
+    <ClInclude Include="GPS_Rcv.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

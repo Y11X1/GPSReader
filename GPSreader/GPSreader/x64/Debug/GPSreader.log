@@ -1,21 +1,15 @@
-﻿  uart_test.cpp
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(32,13): warning C4244: “return”: 从“__int64”转换到“u1”，可能丢失数据
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(82,9): warning C4244: “return”: 从“double”转换到“int”，可能丢失数据
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(308,1): warning C4102: “END”: 未引用的标签
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(266,13): warning C4101: “sum”: 未引用的局部变量
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(266,18): warning C4101: “hour”: 未引用的局部变量
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(270,9): warning C4101: “u1utc”: 未引用的局部变量
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(266,24): warning C4101: “min”: 未引用的局部变量
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(266,6): warning C4101: “check”: 未引用的局部变量
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(266,29): warning C4101: “sec”: 未引用的局部变量
-C:\Users\HP\Desktop\GPSreader\uart_test.cpp(350,10): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const wchar_t *”
-      C:\Users\HP\Desktop\GPSreader\uart_test.cpp(350,10):
-      请考虑在格式字符串中使用“%ls”
-      C:\Users\HP\Desktop\GPSreader\uart_test.cpp(350,10):
-      请考虑在格式字符串中使用“%lls”
-      C:\Users\HP\Desktop\GPSreader\uart_test.cpp(350,10):
-      请考虑在格式字符串中使用“%Ls”
-      C:\Users\HP\Desktop\GPSreader\uart_test.cpp(350,10):
-      请考虑在格式字符串中使用“%ws”
+﻿  GPGGA.cpp
+  GPRMC.cpp
+  GPSstr.cpp
+C:\Users\HP\source\repos\GPSReader\GPSreader\GPSstr.cpp(14,13): warning C4244: “return”: 从“__int64”转换到“u1”，可能丢失数据
+C:\Users\HP\source\repos\GPSReader\GPSreader\GPSstr.cpp(64,9): warning C4244: “return”: 从“double”转换到“int”，可能丢失数据
+  GPS_Rcv.cpp
+  uart_test.cpp
+C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(44,10): warning C4473: “printf”: 没有为格式字符串传递足够的参数
+      C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(44,10):
+      占位符和其参数预计 1 可变参数，但提供的却是 0 参数
+      C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(44,10):
+      缺失的可变参数 1 为格式字符串“%s”所需
   
-  GPSreader.vcxproj -> C:\Users\HP\Desktop\GPSreader\x64\Debug\GPSreader.exe
+  正在生成代码...
+  GPSreader.vcxproj -> C:\Users\HP\Source\Repos\GPSReader\GPSreader\x64\Debug\GPSreader.exe
