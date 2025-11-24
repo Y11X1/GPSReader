@@ -18,7 +18,8 @@ void _GPGGA_Analysis(GPGGA_INFO* gps_gga_info, u1* buf)
 
 	posx = _Find_Pos(p1, 1);									// 得到UTC时间
 	if (posx != 0xFF) {
-		temp = _Str2num(p1 + posx, &dx) / _Pow(10, dx);		// 得到UTC时间,去掉ms	 	
+		int raw_time = _Str2num(p1 + posx, &dx);
+		temp = raw_time / _Pow(10, dx);		// 得到UTC时间,去掉ms	 	
 		gps_gga_info->utc_time.hour = temp / 10000;
 		gps_gga_info->utc_time.min = (temp / 100) % 100;
 		gps_gga_info->utc_time.sec = temp % 100;
