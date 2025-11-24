@@ -6,14 +6,14 @@
 #include "Distance.h"  
 #include "GPSstr.h"
 
-#define comPort L"COM3"  //串口号
+#define comPort L"COM5"  //串口号
 #define baudRate 38400  //波特率
 
 
 
 // 定义目标点
-const double TARGET_LAT = 39.999999;   // 目标纬度（十进制度）
-const double TARGET_LON = 115.999999;  // 目标经度（十进制度）
+const double TARGET_LAT = 29.45953;   // 目标纬度（十进制度） 
+const double TARGET_LON = 106.52386;  // 目标经度（十进制度）
 
 double lat = convertNMEAToDegrees(gga_info.latitude_value);
 double lon = convertNMEAToDegrees(gga_info.longtitude_value);
@@ -125,13 +125,13 @@ int main()
 							for (size_t i = 0; i < bytesRead; i++) {
 								GN_UartRcvGPSInfo(buffer[i]);
 							}
-							//if (gpggaUpdated) {
-							//	printf("GNGGA 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 状态:%d 卫星:%d\n",
-							//		gga_info.utc_time.hour, gga_info.utc_time.min, gga_info.utc_time.sec,
-							//		gga_info.latitude_value, gga_info.latitude,
-							//		gga_info.longtitude_value, gga_info.longitude,
-							//		gga_info.gps_state, gga_info.sate_num);
 							if (gpggaUpdated) {
+								printf("GNGGA 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 状态:%d 卫星:%d\n",
+									gga_info.utc_time.hour, gga_info.utc_time.min, gga_info.utc_time.sec,
+									gga_info.latitude_value, gga_info.latitude,
+									gga_info.longtitude_value, gga_info.longitude,
+									gga_info.gps_state, gga_info.sate_num);
+							//if (gpggaUpdated) {
 								double lat = convertNMEAToDegrees(gga_info.latitude_value);
 								double lon = convertNMEAToDegrees(gga_info.longtitude_value);
 								double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
@@ -150,18 +150,18 @@ int main()
 							//		gmc_info.latitude_value, gmc_info.latitude,
 							//		gmc_info.longtitude_value, gmc_info.longtitude,
 							//		gmc_info.speed);
-							if (gprmcUpdated) {
-								double lat = convertNMEAToDegrees(gmc_info.latitude_value);
-								double lon = convertNMEAToDegrees(gmc_info.longtitude_value);
-								double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
-								printf("当前位置: %.5f, %.5f 距离目标: %.2f米\n", lat, lon, distance);
-								// 到达判断
-								if (isArrived(lat, lon,TARGET_LAT, TARGET_LON,Distance)) {
-									printf("--- 已到达目的地 ---\n");
-								}
-								fflush(stdout);
-								gprmcUpdated = 0;  // 重置标志
-							}
+							//if (gprmcUpdated) {
+							//	double lat = convertNMEAToDegrees(gmc_info.latitude_value);
+							//	double lon = convertNMEAToDegrees(gmc_info.longtitude_value);
+							//	double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
+							//	printf("当前位置: %.5f, %.5f 距离目标: %.2f米\n", lat, lon, distance);
+							//	// 到达判断
+							//	if (isArrived(lat, lon,TARGET_LAT, TARGET_LON,Distance)) {
+							//		printf("--- 已到达目的地 ---\n");
+							//	}
+							//	fflush(stdout);
+							//	gprmcUpdated = 0;  // 重置标志
+							//}
 
 						}
 					}

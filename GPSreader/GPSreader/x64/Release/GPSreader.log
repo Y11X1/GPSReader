@@ -1,18 +1,16 @@
-﻿  GPGGA.cpp
-  GPRMC.cpp
-  GPSstr.cpp
-C:\Users\HP\source\repos\GPSReader\GPSreader\GPSstr.cpp(14,13): warning C4244: “return”: 从“__int64”转换到“u1”，可能丢失数据
-C:\Users\HP\source\repos\GPSReader\GPSreader\GPSstr.cpp(64,9): warning C4244: “return”: 从“double”转换到“int”，可能丢失数据
-  GPS_Rcv.cpp
-  uart_test.cpp
-C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(44,10): warning C4473: “printf”: 没有为格式字符串传递足够的参数
-      C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(44,10):
-      占位符和其参数预计 1 可变参数，但提供的却是 0 参数
-      C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(44,10):
-      缺失的可变参数 1 为格式字符串“%s”所需
+﻿  uart_test.cpp
+E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const wchar_t *”
+      E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10):
+      请考虑在格式字符串中使用“%ls”
+      E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10):
+      请考虑在格式字符串中使用“%lls”
+      E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10):
+      请考虑在格式字符串中使用“%Ls”
+      E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10):
+      请考虑在格式字符串中使用“%ws”
   
   正在生成代码
-  Previous IPDB not found, fall back to full compilation.
-  All 13 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 19 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   已完成代码的生成
-  GPSreader.vcxproj -> C:\Users\HP\source\repos\GPSReader\GPSreader\x64\Release\GPSreader.exe
+  GPSreader.vcxproj -> E:\CODE\GPSreader\GPSreader\x64\Release\GPSreader.exe
