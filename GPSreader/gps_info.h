@@ -10,12 +10,6 @@ typedef   unsigned char     u1;
 typedef   float             f4;
 typedef   double			f8;
 
-
-#define  ASCLL_DATA_$           '$'
-#define  ASCLL_DATA_GPGGA       "$GNGGA"
-#define  ASCLL_DATA_GPRMC       "$GNRMC"
-
-
 #define  MAX_RCV_SIZE			1024*5	// 最大接收缓冲区 5KB
 #define  GPGGA_HEAD_LEN			0x06	// GGA头长度6字节
 #define  CMP_SUCCESS			0x00	// 比较成功
@@ -28,7 +22,8 @@ enum
 	RCV_STATE_IDIE = 0,	 // 空闲状态（没收到数据）
 	RCV_STATE_START,	// 收到$符号
 	RCV_GPGGA_HEAD,		// 正在识别GGA头部
-	RCV_GPRMC_HEAD		// 正在识别RMC头部		//对应的是接受过程的四个状态
+	RCV_GPRMC_HEAD,		// 正在识别RMC头部		//对应的是接受过程的四个状态
+	RCV_WTRTK_HEAD		// 正在识别RTK头部	
 };
 
 typedef struct

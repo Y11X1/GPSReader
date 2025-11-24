@@ -5,19 +5,16 @@
 #include "GPS_Rcv.h"
 #include "Distance.h"  
 #include "GPSstr.h"
+#include "WTRTK.h" 
 
-#define comPort L"COM5"  //串口号
-#define baudRate 38400  //波特率
+#define comPort L"COM3"  //串口号
+//#define baudRate 38400  //波特率
 
-
+#define baudRate 460800 //波特率
 
 // 定义目标点
 const double TARGET_LAT = 29.45953;   // 目标纬度（十进制度） 
 const double TARGET_LON = 106.52386;  // 目标经度（十进制度）
-
-double lat = convertNMEAToDegrees(gga_info.latitude_value);
-double lon = convertNMEAToDegrees(gga_info.longtitude_value);
-double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
 
 //int main()
 //{
@@ -39,6 +36,10 @@ double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
 
 int main()
 {
+	double lat = convertNMEAToDegrees(gga_info.latitude_value);
+	double lon = convertNMEAToDegrees(gga_info.longtitude_value);
+	double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
+
 	// 1. 定义串口参数:设置串口号和波特率（放到宏定义了）
 
 	// 2. 打开串口
@@ -53,7 +54,7 @@ int main()
 	);
 
 	if (hSerial == INVALID_HANDLE_VALUE) {
-		printf("错误：无法打开串口 %s\n",comPort);
+		printf("错误：无法打开串口 %ls\n",comPort);
 		printf("请检查：\n");
 		printf("1. 串口号是否正确（设备管理器中查看）\n");
 		printf("2. 串口是否被其他程序占用\n");
@@ -121,28 +122,41 @@ int main()
 					if (ReadFile(hSerial, buffer, sizeof(buffer) - 1, &bytesRead, NULL)) {
 						if (bytesRead > 0) {
 							buffer[bytesRead] = '\0';
-
+						}
 							for (size_t i = 0; i < bytesRead; i++) {
 								GN_UartRcvGPSInfo(buffer[i]);
 							}
-							if (gpggaUpdated) {
-								printf("GNGGA 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 状态:%d 卫星:%d\n",
-									gga_info.utc_time.hour, gga_info.utc_time.min, gga_info.utc_time.sec,
-									gga_info.latitude_value, gga_info.latitude,
-									gga_info.longtitude_value, gga_info.longitude,
-									gga_info.gps_state, gga_info.sate_num);
+						if (wtrtkUpdated) {
+							printf(" WTRTK解析成功:差分X距离=%.4f 差分Y距离=%.4f 差分Z距离=%.4f 惯导信息：定位标志=%d 纬度=%.8f 经度=%.8f GPS高度=%.4f 定向状态=%d\n",
+								wtrtk_info.diff_x, wtrtk_info.diff_y,wtrtk_info.diff_z,
+								wtrtk_info.loc_flag,wtrtk_info.latitude, 
+								wtrtk_info.longitude,wtrtk_info.altitude,wtrtk_info.orient_status);
+							wtrtkUpdated = 0;
+							fflush(stdout);
+						}
+							//printf("Received %d bytes\n", bytesRead);
+							//for (int i = 0; i < bytesRead; i++) {
+							//	printf("%c", buffer[i]);
+							//}
+		
 							//if (gpggaUpdated) {
-								double lat = convertNMEAToDegrees(gga_info.latitude_value);
-								double lon = convertNMEAToDegrees(gga_info.longtitude_value);
-								double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
-								printf("当前位置: %.5f, %.5f 距离目标: %.2f米\n", lat, lon, distance);
-								// 到达判断
-							if (isArrived(lat, lon,TARGET_LAT, TARGET_LON,Distance)) {
-								printf("--- 已到达目的地 ---\n");
-								}
-								fflush(stdout);
-								gpggaUpdated = 0;  // 重置标志
-							}
+							//	printf("GNGGA 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 状态:%d 卫星:%d\n",
+							//		gga_info.utc_time.hour, gga_info.utc_time.min, gga_info.utc_time.sec,
+							//		gga_info.latitude_value, gga_info.latitude,
+							//		gga_info.longtitude_value, gga_info.longitude,
+							//		gga_info.gps_state, gga_info.sate_num);
+							////if (gpggaUpdated) {
+							//	//double lat = convertNMEAToDegrees(gga_info.latitude_value);
+							//	//double lon = convertNMEAToDegrees(gga_info.longtitude_value);
+							//	//double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
+							//	//printf("当前位置: %.5f, %.5f 距离目标: %.2f米\n", lat, lon, distance);
+							//	// 到达判断
+							////if (isArrived(lat, lon,TARGET_LAT, TARGET_LON,Distance)) {
+							////	printf("--- 已到达目的地 ---\n");
+							////	}
+							//	fflush(stdout);
+							//	gpggaUpdated = 0;  // 重置标志
+							//}
 
 							//if (gprmcUpdated) {
 							//	printf("GNRMC 时间:%02d:%02d:%02d 纬度:%.5f%c 经度:%.5f%c 速度:%.3f\n",
@@ -162,8 +176,12 @@ int main()
 							//	fflush(stdout);
 							//	gprmcUpdated = 0;  // 重置标志
 							//}
-
-						}
+							//if (wtrtkUpdated) {
+							//	printf("WTRTK: 纬度=%.8f 经度=%.8f\n",
+							//		wtrtk_info.latitude, wtrtk_info.longitude);
+							//	wtrtkUpdated = 0;
+							//	fflush(stdout);
+							//
 					}
 				} while (bytesRead > 0); // 继续读取，直到没有数据
 			}

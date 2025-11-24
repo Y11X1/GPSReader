@@ -33,6 +33,9 @@
     <ClCompile Include="Distance.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="WTRTK.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gps_info.h">
@@ -51,6 +54,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Distance.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WTRTK.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
