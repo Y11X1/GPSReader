@@ -110,6 +110,8 @@ int main()
 	DWORD bytesRead;
 	DWORD dwEvent;  // 存储触发的事件
 
+	double Distance = 5.0;
+
 	//使用WaitCommEvent（事件驱动）
 	while (!_kbhit()) {  // 检测键盘是否有按键
 		// 读取数据
@@ -135,8 +137,8 @@ int main()
 								double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
 								printf("当前位置: %.5f, %.5f 距离目标: %.2f米\n", lat, lon, distance);
 								// 到达判断
-							if (isArrived(lat, lon,TARGET_LAT, TARGET_LON)) {
-								printf("*** 已到达目的地 ***\n");
+							if (isArrived(lat, lon,TARGET_LAT, TARGET_LON,Distance)) {
+								printf("--- 已到达目的地 ---\n");
 								}
 								fflush(stdout);
 								gpggaUpdated = 0;  // 重置标志
@@ -154,8 +156,8 @@ int main()
 								double distance = calculateDistance(lat, lon, TARGET_LAT, TARGET_LON);
 								printf("当前位置: %.5f, %.5f 距离目标: %.2f米\n", lat, lon, distance);
 								// 到达判断
-								if (isArrived(lat, lon,TARGET_LAT, TARGET_LON)) {
-									printf("*** 已到达目的地 ***\n");
+								if (isArrived(lat, lon,TARGET_LAT, TARGET_LON,Distance)) {
+									printf("--- 已到达目的地 ---\n");
 								}
 								fflush(stdout);
 								gprmcUpdated = 0;  // 重置标志

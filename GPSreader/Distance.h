@@ -7,6 +7,6 @@ double calculateDistance(double lat1_deg, double lon1_deg,
 
 // 检查是否到达目标点（距离<5米）
 int isArrived(double currentLat, double currentLon,
-    double targetLat, double targetLon);
+    double targetLat, double targetLon,double Distance);
 
 #endif

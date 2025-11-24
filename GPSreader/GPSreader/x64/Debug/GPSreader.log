@@ -2,18 +2,18 @@
   GPGGA.cpp
   GPRMC.cpp
   GPSstr.cpp
-C:\Users\HP\source\repos\GPSReader\GPSreader\GPSstr.cpp(64,9): warning C4244: “return”: 从“double”转换到“int”，可能丢失数据
+E:\CODE\GPSreader\GPSreader\GPSstr.cpp(64,9): warning C4244: “return”: 从“double”转换到“int”，可能丢失数据
   GPS_Rcv.cpp
   uart_test.cpp
-C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(56,10): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const wchar_t *”
-      C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(56,10):
+E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const wchar_t *”
+      E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10):
       请考虑在格式字符串中使用“%ls”
-      C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(56,10):
+      E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10):
       请考虑在格式字符串中使用“%lls”
-      C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(56,10):
+      E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10):
       请考虑在格式字符串中使用“%Ls”
-      C:\Users\HP\source\repos\GPSReader\GPSreader\uart_test.cpp(56,10):
+      E:\CODE\GPSreader\GPSreader\uart_test.cpp(56,10):
       请考虑在格式字符串中使用“%ws”
   
   正在生成代码...
-  GPSreader.vcxproj -> C:\Users\HP\source\repos\GPSReader\GPSreader\x64\Debug\GPSreader.exe
+  GPSreader.vcxproj -> E:\CODE\GPSreader\GPSreader\x64\Debug\GPSreader.exe

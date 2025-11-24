@@ -32,9 +32,9 @@ double calculateDistance(double lat1_deg, double lon1_deg,
 
 // 到达判断（距离阈值5米）
 int isArrived(double currentLat, double currentLon,
-    double targetLat, double targetLon)
+    double targetLat, double targetLon,double Distance)
 {
     double distance = calculateDistance(currentLat, currentLon,
         targetLat, targetLon);
-    return (distance < 5.0);  // 返回1表示到达
+    return (distance < Distance);  // 返回1表示到达
 }
