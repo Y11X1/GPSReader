@@ -7,3 +7,46 @@
 bin/
 obj/
 *.cache
+# Visual Studio build outputs
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio temporary files
+*.obj
+*.pdb
+*.idb
+*.exe
+*.dll
+*.lib
+*.exp
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio cache files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vcxproj.filters
+*.vcxproj.user
+
+# Build logs
+*.tlog
+*.log
+*.idb
+*.pch
