@@ -14,39 +14,20 @@ x64/
 [Bb]in/
 [Oo]bj/
 
-# Visual Studio temporary files
+# 编译输出文件夹（必须忽略）
+x64/
+Debug/
+Release/
+bin/
+obj/
+
+# 二进制文件
 *.obj
 *.pdb
-*.idb
 *.exe
-*.dll
-*.lib
-*.exp
+*.ilk
 
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-[Ww][Ii][Nn]32/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-bld/
-[Bb]in/
-[Oo]bj/
-
-# Visual Studio cache files
-*.suo
+# Visual Studio 缓存
+.VS/
 *.user
-*.userosscache
-*.sln.docstates
-*.vcxproj.filters
-*.vcxproj.user
-
-# Build logs
-*.tlog
-*.log
-*.idb
-*.pch
+*.suo
